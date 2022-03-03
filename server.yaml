@@ -1,0 +1,8 @@
+Server:
+  ListenAddr: 0.0.0.0
+  ControlAddr: 127.0.0.1
+  ListenPort: 8888
+  ControlPort: 8788
+  User: admin
+  Password: 123456
+  
