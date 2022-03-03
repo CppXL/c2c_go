@@ -113,7 +113,7 @@ func checkConfig() error {
 		return errors.New("control port out of range")
 	}
 
-	// 是否相等 端口
+	// 是否相等 端口 s
 	if SConfig.Server.ListenPort == SConfig.Server.ControlPort {
 		return errors.New("listen port and control port is equal")
 	}
