@@ -112,6 +112,7 @@ func checkConfig() error {
 	if value, err := utils.IsNumInRange(SConfig.Server.ControlPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
 		return errors.New("control port out of range")
 	}
+
 	// 是否相等 端口
 	if SConfig.Server.ListenPort == SConfig.Server.ControlPort {
 		return errors.New("listen port and control port is equal")
