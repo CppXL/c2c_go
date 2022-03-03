@@ -13,7 +13,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// 服务端配置
+// 服务端配置结构体
 type server struct {
 	ListenAddr  string `yaml:"ListenAddr" default:"0.0.0.0"`
 	ControlAddr string `yaml:"ControlAddr" default:"0.0.0.0"`
