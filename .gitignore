@@ -2,3 +2,4 @@ bin/*
 .vscode/*
 .idea/*
 *.log
+__debug_bin
