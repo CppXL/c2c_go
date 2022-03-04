@@ -14,6 +14,7 @@ import (
 )
 
 // 服务端配置结构体
+// add
 type server struct {
 	ListenAddr  string `yaml:"ListenAddr" default:"0.0.0.0"`
 	ControlAddr string `yaml:"ControlAddr" default:"0.0.0.0"`

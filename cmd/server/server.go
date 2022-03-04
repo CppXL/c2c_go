@@ -25,6 +25,7 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	// 没错误就绑定端口
 	ListenLn, err = net.Listen("tcp", config.SConfig.Server.ListenAddr+":"+strconv.Itoa(int(config.SConfig.Server.ListenPort)))
 	if err != nil {
