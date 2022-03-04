@@ -31,7 +31,7 @@ func addCommands(root *cobra.Command, commands ...cmder) {
 // 新建rootcmd
 func newRootCmd() *baseCmd {
 	return newBaseCmd(
-		cobra.Command{
+		&cobra.Command{
 			Use:   "server",
 			Short: "这是c&c的服务端，控制bot",
 			Long:  `这是c&c的服务端，控制bot`,
