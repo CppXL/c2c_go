@@ -1,5 +1,10 @@
 package main
 
-func TestInit() {
+import (
+	"fmt"
+	"testing"
+)
 
+func TestInit(t *testing.T) {
+	fmt.Println("nothing to do")
 }
