@@ -30,7 +30,7 @@ type serverConfig struct {
 
 // 默认配置文件路径
 const (
-	defaultConfPath = "./server.yaml"
+	defaultConfPath = "../server.yaml"
 	MaxPort         = 65535
 	MinPort         = 1024
 )
