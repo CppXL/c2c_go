@@ -14,8 +14,6 @@ func TestLoadConfigFromConf(t *testing.T) {
 }
 
 func TestCheckConfig(t *testing.T) {
-	SConfig.Server.ListenPort = 5899
-	SConfig.Server.ControlPort = 5899
 	err := checkConfig()
 	if err != nil {
 		panic(err)
