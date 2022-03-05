@@ -6,11 +6,11 @@ import (
 
 func TestInitSrvConfig(t *testing.T) {
 
-	InitSrvConfig("f:\\code\\go\\c2c\\server.yaml")
+	InitSrvConfig("")
 }
 
 func TestLoadConfigFromConf(t *testing.T) {
-	loadConfigFromConf("")
+	loadConfigFromConf("./server.yaml")
 }
 
 func TestCheckConfig(t *testing.T) {

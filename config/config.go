@@ -14,7 +14,6 @@ import (
 )
 
 // 服务端配置结构体
-// add
 type server struct {
 	ListenAddr  string `yaml:"ListenAddr" default:"0.0.0.0"`
 	ControlAddr string `yaml:"ControlAddr" default:"0.0.0.0"`
@@ -24,19 +23,27 @@ type server struct {
 	Password    string `yaml:"Password"`
 }
 
+// 顶层结构体
 type serverConfig struct {
 	Server server `yaml:"Server"`
 }
 
 // 默认配置文件路径
 const (
-	defaultConfPath = "../server.yaml"
-	MaxPort         = 65535
-	MinPort         = 1024
+	MaxPort = 65535
+	MinPort = 1024
 )
 
+// 初始化为程序运行路径
+var defaultConfPath = "./server.yaml"
+
 // 全局配置
-var SConfig = serverConfig{}
+var SConfig *serverConfig = newServerConfig()
+
+// 返回sconfig指针
+func newServerConfig() *serverConfig {
+	return &serverConfig{}
+}
 
 // 初始化服务端配置 传入配置文件路径
 func InitSrvConfig(confPath string) error {
@@ -46,7 +53,7 @@ func InitSrvConfig(confPath string) error {
 func loadConfigFromConf(confPath string) error {
 
 	var err error
-	// 如果路径不为空则根据路径找配置文件
+	// 如果路径不为空则根据默认路径找配置文件
 	if confPath == "" {
 		confPath = defaultConfPath
 	}
@@ -81,14 +88,14 @@ func loadConfigFromConf(confPath string) error {
 	// 读取到了文件
 	if len(cont) != 0 {
 		// 反序列化配置文件内容
-		err := yaml.UnmarshalStrict(cont, &SConfig)
+		err := yaml.UnmarshalStrict(cont, SConfig)
 		logger.FatalIfError(err)
 	}
-	scont, err := json.MarshalIndent(&SConfig, "", "  ")
+	scont, err := json.MarshalIndent(SConfig, "", "  ")
 	logger.FatalIfError(err)
 	logger.Debugf("config is %s", scont)
 	fmt.Printf("scont is %s\n", scont)
-	fmt.Printf("config is %+v\n", SConfig)
+	fmt.Printf("config is %+v\n", *SConfig)
 	//
 	err = checkConfig()
 	logger.FatalIfError(err)
