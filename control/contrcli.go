@@ -1,4 +1,4 @@
-package contrcli
+package control
 
 import (
 	"bufio"

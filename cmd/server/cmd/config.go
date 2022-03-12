@@ -11,7 +11,7 @@ func init() {
 }
 
 func newConfigCmd() *baseCmd {
-	return newBaseCmd(
+	return newBaseCmdPoint(
 		&cobra.Command{
 			Use:   "config",
 			Short: "使用特定的配置文件",

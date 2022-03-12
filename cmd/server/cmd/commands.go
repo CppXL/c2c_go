@@ -13,7 +13,7 @@ func (c *baseCmd) getCommand() *cobra.Command {
 }
 
 // 通过 cobra.Command 型指针 新建basecmd变量并返回对应变量的指针
-func newBaseCmd(cmd *cobra.Command) *baseCmd {
+func newBaseCmdPoint(cmd *cobra.Command) *baseCmd {
 	return &baseCmd{cmd: cmd}
 }
 
@@ -30,7 +30,7 @@ func addCommands(root *cobra.Command, commands ...cmder) {
 
 // 新建rootcmd
 func newRootCmd() *baseCmd {
-	return newBaseCmd(
+	return newBaseCmdPoint(
 		&cobra.Command{
 			Use:   "server",
 			Short: "这是c&c的服务端，控制bot",

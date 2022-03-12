@@ -34,14 +34,15 @@ const (
 	MinPort = 1024
 )
 
-// 初始化为程序运行路径
+// TODO:初始化为程序运行路径拼接.server.yaml
+//
 var defaultConfPath = "./server.yaml"
 
 // 全局配置
-var SConfig *serverConfig = newServerConfig()
+var SConfig *serverConfig = newServerConfigPoint()
 
 // 返回sconfig指针
-func newServerConfig() *serverConfig {
+func newServerConfigPoint() *serverConfig {
 	return &serverConfig{}
 }
 
