@@ -11,7 +11,7 @@ import (
 var logger *zap.SugaredLogger = nil
 
 func init() {
-	InitLog("info")
+	InitLog("debug")
 }
 
 // InitLog is a initialization for a logger

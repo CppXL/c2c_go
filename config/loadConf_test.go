@@ -10,7 +10,7 @@ func TestInitSrvConfig(t *testing.T) {
 }
 
 func TestLoadConfigFromConf(t *testing.T) {
-	loadConfigFromConf("./server.yaml")
+	loadConfigFromConf("../server.yml")
 }
 
 func TestCheckConfig(t *testing.T) {

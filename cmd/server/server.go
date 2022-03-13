@@ -1,8 +1,10 @@
 package main
 
 import (
+	"c2c/common/logger"
 	"c2c/common/utils/connutil"
 	"c2c/config"
+	"c2c/control/command"
 	"fmt"
 	"log"
 	"net"
@@ -10,43 +12,41 @@ import (
 	"strconv"
 )
 
-// 监听端口
-// 把已有连接加入到队列内 维护连接状态
-
 var (
 	// 监听端口和控制端口连接
 	ListenLn, CtrlLn net.Listener
 )
 
 func init() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	// 解析命令行参数
 	var err error
-	err = config.InitSrvConfig("")
+	err = config.InitSrvConfig("/home/ub/code/c2c/c2c_go/server.yml")
 	if err != nil {
-		log.Fatal(err)
+		logger.Errorf(err.Error())
 	}
 
 	// 没错误就绑定端口
-	ListenLn, err = net.Listen("tcp", config.SConfig.Server.ListenAddr+":"+strconv.Itoa(int(config.SConfig.Server.ListenPort)))
-	if err != nil {
-		fmt.Println(config.SConfig.Server.ListenAddr + strconv.Itoa(int(config.SConfig.Server.ListenPort)))
-		log.Fatal(err)
-	}
-	CtrlLn, err = net.Listen("tcp", config.SConfig.Server.ControlAddr+":"+strconv.Itoa(int(config.SConfig.Server.ControlPort)))
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("Success listening %s:%d\t%s:%d\n",
-		config.SConfig.Server.ListenAddr, config.SConfig.Server.ListenPort,
-		config.SConfig.Server.ControlAddr, config.SConfig.Server.ControlPort)
 
 }
 func main() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	var err error
+	ListenLn, err = net.Listen("tcp", config.SConfig.App.Server.ListenAddr+":"+strconv.Itoa(int(config.SConfig.App.Server.ListenPort)))
+	if err != nil {
+		fmt.Println(config.SConfig.App.Server.ListenAddr + strconv.Itoa(int(config.SConfig.App.Server.ListenPort)))
+		log.Fatal(err)
+	}
+	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Server.ControlAddr+":"+strconv.Itoa(int(config.SConfig.App.Server.ControlPort)))
+	if err != nil {
+		log.Fatal(err)
+	}
+	logger.Infof("Success listening %s:%d\t%s:%d\n",
+		config.SConfig.App.Server.ListenAddr, config.SConfig.App.Server.ListenPort,
+		config.SConfig.App.Server.ControlAddr, config.SConfig.App.Server.ControlPort)
 	log.Printf("Begian Listen \n")
 
-	go connutil.AcConn(ListenLn, connutil.HandleClientConn)
-	connutil.AcConn(CtrlLn, connutil.HandleControlConn)
+	go connutil.AcConn(ListenLn, command.HandleClientConn)
+	connutil.AcConn(CtrlLn, command.HandleControlConn)
 
 	// 阻塞
 }
