@@ -1,5 +1,5 @@
 App:
-  Server:
+  Agent:
     ListenAddr: 0.0.0.0
     ControlAddr: 127.0.0.1
     ListenPort: 8888

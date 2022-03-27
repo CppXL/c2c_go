@@ -18,33 +18,39 @@ var (
 )
 
 func init() {
+	// 设置CPU
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	// 解析命令行参数
-	var err error
-	err = config.InitSrvConfig("/home/ub/code/c2c/c2c_go/server.yml")
-	if err != nil {
-		logger.Errorf(err.Error())
-	}
+	err := config.InitSrvConfig("/home/ub/code/c2c/c2c_go/server.yml")
+
+	logger.FatalIfError(err)
 
 	// 没错误就绑定端口
 
 }
 func main() {
 	var err error
-	ListenLn, err = net.Listen("tcp", config.SConfig.App.Server.ListenAddr+":"+strconv.Itoa(int(config.SConfig.App.Server.ListenPort)))
+	// 这里要保证IP地址和端口是有效的
+	// 监听配置中的Server端口
+	ListenLn, err = net.Listen("tcp", config.SConfig.App.Agent.ListenAddr+":"+strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
+	logger.FatalIfError(err)
 	if err != nil {
-		fmt.Println(config.SConfig.App.Server.ListenAddr + strconv.Itoa(int(config.SConfig.App.Server.ListenPort)))
+		fmt.Println("error lisning:", config.SConfig.App.Agent.ListenAddr+strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
 		log.Fatal(err)
 	}
-	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Server.ControlAddr+":"+strconv.Itoa(int(config.SConfig.App.Server.ControlPort)))
+	// 监听control 端口
+	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Agent.ControlAddr+":"+strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
 	if err != nil {
+		fmt.Println("error lisning:", config.SConfig.App.Agent.ControlAddr+strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
 		log.Fatal(err)
 	}
 	logger.Infof("Success listening %s:%d\t%s:%d\n",
-		config.SConfig.App.Server.ListenAddr, config.SConfig.App.Server.ListenPort,
-		config.SConfig.App.Server.ControlAddr, config.SConfig.App.Server.ControlPort)
+		config.SConfig.App.Agent.ListenAddr, config.SConfig.App.Agent.ListenPort,
+		config.SConfig.App.Agent.ControlAddr, config.SConfig.App.Agent.ControlPort)
 	log.Printf("Begian Listen \n")
 
+	// 起协程 使用Listen 返回的Listener类型的连接
+	// 到这里就完成了监听任务
 	go connutil.AcConn(ListenLn, command.HandleClientConn)
 	connutil.AcConn(CtrlLn, command.HandleControlConn)
 

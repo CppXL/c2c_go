@@ -13,7 +13,7 @@ import (
 )
 
 // 服务端配置结构体
-type server struct {
+type agent struct {
 	ListenAddr  string `yaml:"ListenAddr" default:"0.0.0.0"`
 	ControlAddr string `yaml:"ControlAddr" default:"0.0.0.0"`
 	ListenPort  int64  `yaml:"ListenPort" default:"56689"`
@@ -31,7 +31,7 @@ type logging struct {
 // 顶层结构体
 type appConfig struct {
 	App struct {
-		Server  server  `yaml:"Server"`
+		Agent   agent   `yaml:"Agent"`
 		Logging logging `yaml:"Logging"`
 	} `yaml:"App"`
 }
@@ -125,16 +125,16 @@ func loadDefaultConf() {
 func checkConfig() error {
 	// 检查配置文件配置是否正确
 	// Listen端口是否在范围内
-	if value, err := utils.IsNumInRange(SConfig.App.Server.ListenPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
+	if value, err := utils.IsNumInRange(SConfig.App.Agent.ListenPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
 		return errors.New("listen port out of range")
 	}
 	// 控制端口是否在范围内
-	if value, err := utils.IsNumInRange(SConfig.App.Server.ControlPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
+	if value, err := utils.IsNumInRange(SConfig.App.Agent.ControlPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
 		return errors.New("control port out of range")
 	}
 
 	// 是否相等 端口
-	if SConfig.App.Server.ListenPort == SConfig.App.Server.ControlPort {
+	if SConfig.App.Agent.ListenPort == SConfig.App.Agent.ControlPort {
 		return errors.New("listen port and control port is equal")
 	}
 

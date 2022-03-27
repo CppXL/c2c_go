@@ -33,6 +33,16 @@
 
 
 
+#### 系统层次
+
+|木马|
+------
+| tcp
+  v
+接收器
+
+
+
 参考
 
 | https://blog.netlab.360.com/pinkbot/

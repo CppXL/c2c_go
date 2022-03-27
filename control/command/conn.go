@@ -1,13 +1,14 @@
 package command
 
 import (
-	"fmt"
+	"bufio"
+	"c2c/common/logger"
+	"io"
 	"net"
-	"time"
 )
 
 //
-func HandleClientConn(conn net.Conn) {
+func HandleClientConn(conn net.Conn, args ...interface{}) {
 	defer func() {
 		conn.Close()
 	}()
@@ -15,32 +16,38 @@ func HandleClientConn(conn net.Conn) {
 }
 
 // 控制台连接
-func HandleControlConn(conn net.Conn) {
+func HandleControlConn(conn net.Conn, args ...interface{}) {
 	defer func() {
 		conn.Close()
 	}()
 
-	conn.SetDeadline(time.Now().Add(10 * time.Second))
-	conn.Write([]byte("控制Client,输入操作码\n1. 展示所有连接\t2. 控制连接\t3. 退出\n输入:"))
-	cmd, err := conn.Read()
-	if err != nil {
-		this.conn.Write([]byte("ERR|Failed reading line\r\n"))
-		return
-	}
+	// conn.SetDeadline(time.Now().Add(10 * time.Second))
+	reader := bufio.NewReader(conn)
+	// var in string
+	var i int
 	for {
+		conn.Write([]byte("console>"))
+		cmd, err := reader.ReadString('\n')
+		if err == io.EOF {
+			logger.Infof("recv EOF")
+			return
+		} else {
+			logger.FatalIfError(err)
 
-		switch code {
-		case 1:
+		}
+		logger.Infof("recv %s form %v\n", cmd, conn.RemoteAddr())
+		// fmt.Scanln(&in)
 
-			// contrcli.ShowAllCli(globalvars.ConnLi)
-			continue
-		case 2:
-			// contrcli.ShowAllCli(globalvars.ConnLi)
-			var s int
-			fmt.Print("输入控制那个client:")
-			fmt.Scan(&s)
-			// contrcli.Snd2Cli(globalvars.ConnLi[s])
-			continue
+		if cmd[len(cmd)-1] == '\n' {
+			conn.Write([]byte(cmd))
+
+		} else {
+			conn.Write([]byte(cmd + "\n"))
+
+		}
+		i++
+		if i == 10 {
+			break
 		}
 	}
 

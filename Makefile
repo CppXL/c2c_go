@@ -1,5 +1,5 @@
 
-COMPILER=/usr/local/src/go/bin/go
+COMPILER=/usr/local/src/go118/bin/go
 args:=""
 bs:
 	$(COMPILER) build -o ./bin/server c2c/cmd/server

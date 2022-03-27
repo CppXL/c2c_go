@@ -7,4 +7,5 @@ import (
 
 func TestMain(t *testing.T) {
 	fmt.Println("nothing to do")
+	main()
 }
