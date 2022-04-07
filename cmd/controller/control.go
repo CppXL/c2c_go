@@ -16,6 +16,7 @@ type recvData struct {
 	data []byte
 }
 
+// 使用证书 进行双向认证
 func main() {
 	args := os.Args
 	if len(args) < 3 {

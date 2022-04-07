@@ -13,3 +13,5 @@ App:
       - client
       - control
     Path: /var/log/c2c/
+  Cert:
+    

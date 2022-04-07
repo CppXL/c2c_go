@@ -3,7 +3,7 @@ package main
 import (
 	"c2c/common/logger"
 	"c2c/common/utils/connutil"
-	"c2c/config"
+	config "c2c/config/tcp"
 	"c2c/control/command"
 	"fmt"
 	"log"
