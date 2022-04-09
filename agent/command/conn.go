@@ -15,7 +15,7 @@ func HandleClientConn(conn net.Conn, args ...interface{}) {
 
 }
 
-// 控制台连接
+// connect to control
 func HandleControlConn(conn net.Conn, args ...interface{}) {
 	defer func() {
 		conn.Close()

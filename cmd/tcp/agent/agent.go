@@ -1,10 +1,10 @@
 package main
 
 import (
+	"c2c/agentgo/command"
 	"c2c/common/logger"
 	"c2c/common/utils/connutil"
 	config "c2c/config/tcp"
-	"c2c/control/command"
 	"fmt"
 	"log"
 	"net"
@@ -18,9 +18,9 @@ var (
 )
 
 func init() {
-	// 设置CPU
+	// set CPU
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	// 解析命令行参数
+	// paese command line args
 	err := config.InitSrvConfig("/home/ub/code/c2c/c2c_go/server.yml")
 
 	logger.FatalIfError(err)
@@ -32,16 +32,20 @@ func main() {
 	var err error
 	// 这里要保证IP地址和端口是有效的
 	// 监听配置中的Server端口
-	ListenLn, err = net.Listen("tcp", config.SConfig.App.Agent.ListenAddr+":"+strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
+	ListenLn, err = net.Listen("tcp", config.SConfig.App.Agent.ListenAddr+":"+
+		strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
 	logger.FatalIfError(err)
 	if err != nil {
-		fmt.Println("error lisning:", config.SConfig.App.Agent.ListenAddr+strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
+		fmt.Println("error lisning:", config.SConfig.App.Agent.ListenAddr+
+			strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
 		log.Fatal(err)
 	}
 	// 监听control 端口
-	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Agent.ControlAddr+":"+strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
+	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Agent.ControlAddr+":"+
+		strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
 	if err != nil {
-		fmt.Println("error lisning:", config.SConfig.App.Agent.ControlAddr+strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
+		fmt.Println("error lisning:", config.SConfig.App.Agent.ControlAddr+
+			strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
 		log.Fatal(err)
 	}
 	logger.Infof("Success listening %s:%d\t%s:%d\n",
