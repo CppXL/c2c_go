@@ -1,10 +1,10 @@
 package main
 
 import (
-	"c2c/agentgo/command"
 	"c2c/common/logger"
 	"c2c/common/utils/connutil"
 	config "c2c/config/tcp"
+	"c2c/tcpagent/command"
 	"fmt"
 	"log"
 	"net"
@@ -21,7 +21,7 @@ func init() {
 	// set CPU
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	// paese command line args
-	err := config.InitSrvConfig("/home/ub/code/c2c/c2c_go/server.yml")
+	err := config.InitSrvConfig("/home/ub/code/c2c/c2c/server.yml")
 
 	logger.FatalIfError(err)
 

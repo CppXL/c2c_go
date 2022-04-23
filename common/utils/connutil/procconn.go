@@ -5,14 +5,16 @@ import (
 	"net"
 )
 
-func AcConn(ln net.Listener, handleConn func(conn net.Conn, args ...interface{}), args ...interface{}) {
+func AcConn(ln net.Listener, handleConnFunc func(conn net.Conn, args ...interface{}), args ...interface{}) {
 	for {
 		// 接受连接，没有连接这里会阻塞
 		conn, err := ln.Accept()
 		if err != nil {
-			panic(err)
+			// 打印错误 继续循环
+			logger.Warnf(err.Error())
+			continue
 		}
-		logger.Infof("Accept Conn from %v to %v \n", conn.RemoteAddr(), conn.LocalAddr())
-		go handleConn(conn, args)
+		logger.Infof("Accept Conn from %v to %v  handle by %v\n", conn.RemoteAddr(), conn.LocalAddr(), handleConnFunc)
+		go handleConnFunc(conn, args)
 	}
 }

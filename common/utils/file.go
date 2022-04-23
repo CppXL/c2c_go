@@ -5,9 +5,9 @@ import (
 )
 
 func IsFileExists(filePath string) bool {
-	info, err := os.Stat(filePath)
+	Finfo, err := os.Stat(filePath)
 	if os.IsNotExist(err) {
 		return false
 	}
-	return !info.IsDir()
+	return !Finfo.IsDir()
 }

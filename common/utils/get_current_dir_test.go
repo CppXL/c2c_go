@@ -8,11 +8,11 @@ import (
 )
 
 func TestGetCurrDir(t *testing.T) {
-	fmt.Println(GetCurrDir())
+	fmt.Println(GetCurrentDir())
 	fmt.Println(os.Executable())
-	fmt.Println(filepath.Dir(GetCurrDir() + "../../srver"))
+	fmt.Println(filepath.Dir(GetCurrentDir() + "../../srver"))
 
-	fmt.Println(filepath.Dir(filepath.Dir(GetCurrDir())))
+	fmt.Println(filepath.Dir(filepath.Dir(GetCurrentDir())))
 	var a int
 	fmt.Scan(&a)
 }

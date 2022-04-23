@@ -7,7 +7,6 @@ require (
 	github.com/spf13/cobra v1.3.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/yaml.v2 v2.4.0
-
 )
 
 require (

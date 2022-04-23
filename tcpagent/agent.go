@@ -1,4 +1,4 @@
-package agent
+package tcpagent
 
 import (
 	"c2c/common/logger"
@@ -6,18 +6,11 @@ import (
 	"sync"
 )
 
-// 这里
+// 描述 agent自身的连接
 type Agent struct {
-	conn          net.Conn
-	AgentListener net.Listener
+	FrontListener net.Listener
+	BackendConn   net.Conn
 	ClientList    sync.Map
-}
-
-func (s *Agent) SetConn(c net.Conn) {
-	s.conn = c
-}
-func (s *Agent) GetConn() net.Conn {
-	return s.conn
 }
 
 func Listen(network, address string) (*Agent, error) {
@@ -26,7 +19,7 @@ func Listen(network, address string) (*Agent, error) {
 		logger.Errorf(err.Error())
 	}
 
-	return &Agent{AgentListener: listener}, nil
+	return &Agent{FrontListener: listener}, nil
 }
 
 func (s *Agent) Run() {

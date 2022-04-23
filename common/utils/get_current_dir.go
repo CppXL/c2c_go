@@ -6,11 +6,9 @@ import (
 	"path/filepath"
 )
 
-func GetCurrDir() string {
-	return getCurrDir()
-}
-
-func getCurrDir() string {
+// Get executable file path
+// return string
+func GetCurrentDir() string {
 	path, err := os.Executable()
 	if err != nil {
 		log.Println(err)

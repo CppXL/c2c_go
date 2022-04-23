@@ -1,6 +1,8 @@
 package def
 
-import "net"
+import (
+	"net"
+)
 
 // agent function interface def
 type AgentInterface interface {
