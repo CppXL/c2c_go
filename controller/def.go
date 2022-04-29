@@ -1,5 +1,7 @@
 package controller
 
+import "net"
+
 type agenttype uint8
 
 const (
@@ -8,4 +10,5 @@ const (
 )
 
 type Controller struct {
+	BackendListener net.Listener
 }

@@ -6,9 +6,10 @@ import (
 
 // 所有类型的agent都要实现这个接口
 type AgentInterface interface {
-	SendCmd(conn net.Conn, cmd uint16, cmdArgs []byte) error
-	OnHeartBeatTimeout() // heartbeat time out
-	OnClientClose()      // client close
+	// 进入agent的shell
+	Shell() error
+	// 关闭agent
+	Close() error
 }
 
 type Agent struct {
