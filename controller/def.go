@@ -6,3 +6,6 @@ const (
 	TCPAGENT agenttype = 0x1 + iota
 	HTTPAGENT
 )
+
+type Controller struct {
+}

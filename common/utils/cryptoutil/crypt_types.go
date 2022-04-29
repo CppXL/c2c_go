@@ -5,4 +5,5 @@ const (
 	BASE64
 	CHACHA20
 	TEA
+	ECC
 )

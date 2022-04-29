@@ -14,7 +14,7 @@ func GenerateAesKey() ([]byte, error) {
 	return key, nil
 }
 
-// generate AES CBC mode init vector return 256bits data
+// generate AES CBC mode init vector return 128bits data
 func GenerateIv() ([]byte, error) {
 	iv := make([]byte, 16)
 	_, err := rand.Read(iv)

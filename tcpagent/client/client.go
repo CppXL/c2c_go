@@ -10,12 +10,11 @@ type Client struct {
 }
 
 // 描述每个agent和client的连接加密部分信息+
-// 
 type CryptBody struct {
 	CryptType int
 	SubType   int
-	Key       []byte
-	Iv        []byte
+	AESKey    []byte
+	AESIv     []byte
 }
 
 func (c *Client) SetConn(conn net.Conn) {

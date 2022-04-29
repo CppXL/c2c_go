@@ -1,4 +1,4 @@
-App:
+Tcp:
   Agent:
     ListenAddr: 0.0.0.0
     ControlAddr: 127.0.0.1
@@ -12,6 +12,6 @@ App:
       - server
       - client
       - control
-    Path: /var/log/c2c/
+    Path: /var/log/c2c/tcp.agent.log
    
     

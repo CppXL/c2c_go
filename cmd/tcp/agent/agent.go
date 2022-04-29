@@ -32,25 +32,25 @@ func main() {
 	var err error
 	// 这里要保证IP地址和端口是有效的
 	// 监听配置中的Server端口
-	ListenLn, err = net.Listen("tcp", config.SConfig.App.Agent.ListenAddr+":"+
-		strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
+	ListenLn, err = net.Listen("tcp", config.SConfig.Tcp.Agent.ListenAddr+":"+
+		strconv.Itoa(int(config.SConfig.Tcp.Agent.ListenPort)))
 	logger.FatalIfError(err)
 	if err != nil {
-		fmt.Println("error lisning:", config.SConfig.App.Agent.ListenAddr+
-			strconv.Itoa(int(config.SConfig.App.Agent.ListenPort)))
+		fmt.Println("error lisning:", config.SConfig.Tcp.Agent.ListenAddr+
+			strconv.Itoa(int(config.SConfig.Tcp.Agent.ListenPort)))
 		log.Fatal(err)
 	}
 	// 监听control 端口
-	CtrlLn, err = net.Listen("tcp", config.SConfig.App.Agent.ControlAddr+":"+
-		strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
+	CtrlLn, err = net.Listen("tcp", config.SConfig.Tcp.Agent.ControlAddr+":"+
+		strconv.Itoa(int(config.SConfig.Tcp.Agent.ControlPort)))
 	if err != nil {
-		fmt.Println("error lisning:", config.SConfig.App.Agent.ControlAddr+
-			strconv.Itoa(int(config.SConfig.App.Agent.ControlPort)))
+		fmt.Println("error lisning:", config.SConfig.Tcp.Agent.ControlAddr+
+			strconv.Itoa(int(config.SConfig.Tcp.Agent.ControlPort)))
 		log.Fatal(err)
 	}
 	logger.Infof("Success listening %s:%d\t%s:%d\n",
-		config.SConfig.App.Agent.ListenAddr, config.SConfig.App.Agent.ListenPort,
-		config.SConfig.App.Agent.ControlAddr, config.SConfig.App.Agent.ControlPort)
+		config.SConfig.Tcp.Agent.ListenAddr, config.SConfig.Tcp.Agent.ListenPort,
+		config.SConfig.Tcp.Agent.ControlAddr, config.SConfig.Tcp.Agent.ControlPort)
 	log.Printf("Begian Listen \n")
 
 	// 起协程 使用Listen 返回的Listener类型的连接

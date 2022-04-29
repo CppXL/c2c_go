@@ -1,10 +1,10 @@
 package message
 
-// magic number for agent
-const AgentMagic uint32 = 0xAFBEBEAF
+// magic number for tcp agent
+const TcpAgentMagic uint32 = 0xAFBEBEAF
 
-// magic number for client
-const ClientMagic uint32 = 0x6F9A9A6F
+// magic number for tcp client
+const TcpClientMagic uint32 = 0x6F9A9A6F
 
 // agent to client message head format
 type TcpAgentMsgHead struct {
