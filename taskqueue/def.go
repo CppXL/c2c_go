@@ -13,7 +13,7 @@ type TaskList struct {
 
 // 任务状态标志
 const (
-	TASKFINISH = 1 + iota
+	TASKFINISH uint8 = 1 + iota
 	TASKFAILED
 	TASKEXECING
 	TASKTIMEOUT

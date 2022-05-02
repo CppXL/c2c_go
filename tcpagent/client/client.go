@@ -2,7 +2,7 @@ package client
 
 import "net"
 
-// 描述agent和client之间的连接，对于每个client都会有这样的结构存储相关信息
+// 描述agent和client之间的连接，对于每个连接到agent的client来说都会有这样的结构存储相关信息
 type Client struct {
 	Token     uint32
 	conn      net.Conn
