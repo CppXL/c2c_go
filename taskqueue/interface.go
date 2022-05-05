@@ -1,3 +1,5 @@
-package task
+package taskqueue
 
-func (t *TaskList) Add()
+type TaskQueueInterface interface {
+	OnTaskAdded()
+}

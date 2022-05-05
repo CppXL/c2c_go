@@ -12,28 +12,27 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// 服务端配置结构体
-type agent struct {
-	ListenAddr  string `yaml:"ListenAddr" default:"0.0.0.0"`
-	ControlAddr string `yaml:"ControlAddr" default:"0.0.0.0"`
-	ListenPort  int64  `yaml:"ListenPort" default:"56689"`
-	ControlPort int64  `yaml:"ControlPort" default:"57888"`
-	User        string `yaml:"User" default:"admin"`
-	Password    string `yaml:"Password" default:"P@ssW0r3"`
+// tcp agent config struct
+type TcpAgent struct {
+	ListenAddr string `yaml:"ListenAddr" default:"0.0.0.0"`
+	ListenPort int64  `yaml:"ListenPort" default:"56689"`
+	User       string `yaml:"User" default:"admin"`
+	Password   string `yaml:"Password" default:"P@ssW0r3"`
 }
 
 // logging 结构体
-type logging struct {
-	Level []string `yaml:"Level"`
-	Path  string   `yaml:"Path"`
+type TcpLogging struct {
+	Level string `yaml:"Level"`
+	Path  string `yaml:"Path"`
 }
 
-// 顶层结构体
-type appConfig struct {
+// tcp agent 顶层结构体
+type Config struct {
 	Tcp struct {
-		Agent   agent   `yaml:"Agent"`
-		Logging logging `yaml:"Logging"`
+		Agent   TcpAgent   `yaml:"Agent"`
+		Logging TcpLogging `yaml:"Logging"`
 	} `yaml:"Tcp"`
+	Controller Controller `yaml:"Controller"`
 }
 
 // 默认配置文件路径
@@ -44,22 +43,18 @@ const (
 
 var (
 	// TODO:初始化为程序运行路径拼接 .server.yaml
-	defaultConfPath = "../server.yml"
-	SConfig         *appConfig
+	defaultConfPath         = "/home/ub/code/c2c/c2c/server.yml"
+	SConfig         *Config = newTcpAgentConfigPoint()
 )
 
 // 返回sconfig指针
-func newServerConfigPoint() *appConfig {
-	return &appConfig{}
+func newTcpAgentConfigPoint() *Config {
+	return &Config{}
 }
 
 // 初始化服务端配置 传入配置文件路径
-func InitSrvConfig(confPath string) error {
+func InitTcpAgentConfig(confPath string) error {
 	return loadConfigFromConf(confPath)
-}
-
-func init() {
-	SConfig = newServerConfigPoint()
 }
 
 func loadConfigFromConf(confPath string) error {
@@ -75,7 +70,7 @@ func loadConfigFromConf(confPath string) error {
 	if !filepath.IsAbs(confPath) {
 		confPath, err = filepath.Abs(confPath)
 		if err != nil {
-			panic(err)
+			logger.Errorf(err.Error())
 		}
 	}
 	logger.Infof("try to load config from %s", confPath)
@@ -89,8 +84,10 @@ func loadConfigFromConf(confPath string) error {
 
 	// 如果有效 尝试载入配置文件
 	cont := []byte{}
+	// 读取文件
 	cont1, err := ioutil.ReadFile(confPath)
 	if err != nil {
+		logger.Errorf(err.Error())
 		return err
 	}
 	if cont1 != nil {
@@ -103,12 +100,11 @@ func loadConfigFromConf(confPath string) error {
 		// 如果报错则直接抛出
 		logger.FatalIfError(err)
 	}
+	// 格式化
 	scont, err := json.MarshalIndent(SConfig, "", "  ")
 	logger.FatalIfError(err)
 	logger.Infof("config is %s", scont)
 	logger.Infof("scont is %s\n", scont)
-	// fmt.Printf("config is %+v\n", *SConfig)
-	//
 	err = checkConfig()
 	logger.FatalIfError(err)
 	if err != nil {
@@ -129,14 +125,14 @@ func checkConfig() error {
 		return errors.New("listen port out of range")
 	}
 	// 控制端口是否在范围内
-	if value, err := utils.IsNumInRange(SConfig.Tcp.Agent.ControlPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
-		return errors.New("control port out of range")
-	}
+	// if value, err := utils.IsNumInRange(SConfig.Tcp.Agent.ControlPort, MinPort, MaxPort, [2]byte{'(', ')'}); !value && err == nil {
+	// 	return errors.New("control port out of range")
+	// }
 
-	// 是否相等 端口
-	if SConfig.Tcp.Agent.ListenPort == SConfig.Tcp.Agent.ControlPort {
-		return errors.New("listen port and control port is equal")
-	}
+	// // 是否相等 端口
+	// if SConfig.Tcp.Agent.ListenPort == SConfig.Tcp.Agent.ControlPort {
+	// 	return errors.New("listen port and control port is equal")
+	// }
 
 	// todo 检查IP地址是否合法
 	//

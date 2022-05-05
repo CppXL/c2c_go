@@ -11,5 +11,5 @@ func (a *Agent) Shell() error {
 	return nil
 }
 func (a *Agent) GetParams() def.AgentParams {
-	return a.Params
+	return *a.Params
 }
