@@ -22,11 +22,14 @@ func init() {
 	}
 	// try to listen port
 	// if listen port failed, then add failed mark to agent status
+	err := TcpAgent.run()
+	if err != nil {
+		params.Status = def.AgentStatus_LoadFailed
+	} else {
+		params.Status = def.AgentStatus_Running
+	}
 	TcpAgent.Params = &params
 	controller.RegisterAgent(TcpAgent, Atq)
-
-	// 注册之后运行
-	TcpAgent.run()
 }
 
 // 描述 tcp agent的结构

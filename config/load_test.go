@@ -6,7 +6,7 @@ import (
 
 func TestInitSrvConfig(t *testing.T) {
 
-	err := InitTcpAgentConfig("")
+	err := InitConfig("")
 	if err != nil {
 		t.Error(err)
 	}

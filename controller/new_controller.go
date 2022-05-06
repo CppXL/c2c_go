@@ -8,6 +8,10 @@ import (
 
 var Controller *Control = NewController()
 
+func init() {
+
+}
+
 func NewController() *Control {
 	// 从配置中读取地址 端口等信息
 	var c *Control = &Control{}

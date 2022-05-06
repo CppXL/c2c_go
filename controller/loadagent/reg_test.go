@@ -1,6 +1,8 @@
-package regtest
+package loadagent
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestReg(t *testing.T) {
 	Reg()

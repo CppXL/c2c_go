@@ -25,10 +25,13 @@ type AgentParams struct {
 
 type AgentStatus uint8
 
+// agent status def
 const (
 	AgentStatus_NotLoad AgentStatus = iota + 1
 	AgentStatus_LoadFailed
+	AgentStatus_Loaded
 	AgentStatus_Running
+	AgentStatus_Runfailed
 	AgentStatus_Stopped
 	AgentStatus_Restarting
 )
