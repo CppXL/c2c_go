@@ -13,12 +13,15 @@ func TestInitSrvConfig(t *testing.T) {
 }
 
 func TestLoadConfigFromConf(t *testing.T) {
-	loadConfigFromConf("../server.yml")
+	err := loadConfigFromConf("../config.yml")
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestCheckConfig(t *testing.T) {
 	err := checkConfig()
 	if err != nil {
-		panic(err)
+		t.Error(err)
 	}
 }

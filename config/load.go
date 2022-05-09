@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
 )
 
@@ -20,13 +19,10 @@ func newConfigPoint() *Config {
 
 // 初始化服务端配置 传入配置文件路径
 func InitConfig(confPath string) error {
-	viper.AddConfigPath(confPath)
-
 	return loadConfigFromConf(confPath)
 }
 
 func loadConfigFromConf(confPath string) error {
-
 	var err error
 	// 如果路径为空则根据默认路径找配置文件
 	if confPath == "" {
@@ -49,6 +45,9 @@ func loadConfigFromConf(confPath string) error {
 		loadDefaultConf()
 		return fmt.Errorf("path %s does not exists or is directory", confPath)
 	}
+	// viper.SetConfigName("config")
+	// viper.SetConfigType("yaml")
+	// viper.AddConfigPath(confPath)
 
 	// 如果有效 尝试载入配置文件
 	cont := []byte{}
