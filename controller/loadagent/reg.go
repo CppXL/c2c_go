@@ -2,12 +2,12 @@ package loadagent
 
 import (
 	"c2c/controller"
-	_ "c2c/dnsagent"
-	_ "c2c/tcpagent"
+	_ "c2c/plugins/dnsagent"
+	_ "c2c/plugins/tcpagent"
 	"fmt"
 )
 
-func Reg() {
+func RegAgent() {
 	fmt.Printf("%+v\n", controller.Controller)
 	for _, v := range controller.Controller.AgentList {
 		fmt.Println(v.GetParams())

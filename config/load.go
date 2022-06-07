@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
 )
 
@@ -45,9 +46,16 @@ func loadConfigFromConf(confPath string) error {
 		loadDefaultConf()
 		return fmt.Errorf("path %s does not exists or is directory", confPath)
 	}
-	// viper.SetConfigName("config")
-	// viper.SetConfigType("yaml")
-	// viper.AddConfigPath(confPath)
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.SetConfigFile(confPath)
+	if err = viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			logger.Errorf("read config file error: %s", err.Error())
+		} else {
+			logger.Errorf("read config file error: %s", err.Error())
+		}
+	}
 
 	// 如果有效 尝试载入配置文件
 	cont := []byte{}

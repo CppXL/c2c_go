@@ -1,7 +1,6 @@
 bin/*
 .vscode/*
 .idea/*
-.idea/*
 *.log
 __debug_bin
 layout.txt

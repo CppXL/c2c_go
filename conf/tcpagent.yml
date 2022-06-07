@@ -9,8 +9,3 @@ Tcp:
     Level: debug
     Path: /var/log/c2c/tcp.agent.log
 
-Controller:
-  BackendListenAddr: 0.0.0.0
-  BackendListenPort: 8889
-  User: admin
-  Password: 123456

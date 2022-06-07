@@ -5,5 +5,5 @@ import (
 )
 
 func TestReg(t *testing.T) {
-	Reg()
+	RegAgent()
 }
