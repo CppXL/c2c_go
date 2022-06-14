@@ -31,6 +31,6 @@ const (
 
 var (
 	// TODO:初始化为程序运行路径拼接 .server.yaml
-	defaultConfPath         = "/home/ub/code/c2c/c2c/config.yml"
+	defaultConfPath         = "/home/ub/code/go/c2c_go/conf"
 	SConfig         *Config = newConfigPoint()
 )

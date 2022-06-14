@@ -23,6 +23,7 @@ func InitConfig(confPath string) error {
 	return loadConfigFromConf(confPath)
 }
 
+// 传入配置文件所在目录路径
 func loadConfigFromConf(confPath string) error {
 	var err error
 	// 如果路径为空则根据默认路径找配置文件
@@ -38,24 +39,17 @@ func loadConfigFromConf(confPath string) error {
 			logger.Errorf(err.Error())
 		}
 	}
-	logger.Infof("try to load config from %s", confPath)
+	logger.Infof("try to load config from path:%s", confPath)
 
 	// 判断文件是否存在 返回false可能是目录
-	if !utils.IsFileExists(confPath) {
+	if !utils.IsDirExists(confPath) {
 		// 路径无效或者是文件夹则尝试加载默认配置
-		loadDefaultConf()
-		return fmt.Errorf("path %s does not exists or is directory", confPath)
+		logger.Errorf("config path is invalid:%s", confPath)
+		return fmt.Errorf("path %s does not exists", confPath)
 	}
-	viper.SetConfigName("config")
+	// viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.SetConfigFile(confPath)
-	if err = viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			logger.Errorf("read config file error: %s", err.Error())
-		} else {
-			logger.Errorf("read config file error: %s", err.Error())
-		}
-	}
+	viper.AddConfigPath(confPath)
 
 	// 如果有效 尝试载入配置文件
 	cont := []byte{}

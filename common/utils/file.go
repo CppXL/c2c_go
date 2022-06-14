@@ -11,3 +11,11 @@ func IsFileExists(filePath string) bool {
 	}
 	return !Finfo.IsDir()
 }
+
+func IsDirExists(path string) bool {
+	Finfo, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return Finfo.IsDir()
+}
