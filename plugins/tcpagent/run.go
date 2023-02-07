@@ -2,7 +2,7 @@ package tcpagent
 
 import (
 	"c2c/common/logger"
-	"c2c/config"
+	config "c2c/configs"
 	"fmt"
 	"net"
 	"strconv"
