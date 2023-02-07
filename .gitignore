@@ -3,3 +3,4 @@ bin/*
 .idea/*
 *.log
 __debug_bin
+layout.txt

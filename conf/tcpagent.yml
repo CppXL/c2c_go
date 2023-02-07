@@ -1,0 +1,11 @@
+Tcp:
+  Agent:
+    ListenAddr: 0.0.0.0
+    ListenPort: 8888
+    User: admin
+    Password: 123456
+    
+  Logging:
+    Level: debug
+    Path: /var/log/c2c/tcp.agent.log
+

@@ -1,27 +1,32 @@
 
-COMPILER=/usr/local/src/go/bin/go
+COMPILER=/usr/local/src/go118/bin/go
+args:=""
+buildtcpagent:
+	$(COMPILER) build -o ./bin/tcp/agent c2c/cmd/tcp/agent
 
-bs:
-	$(COMPILER) build -o ./bin/server c2c/cmd/server
+buildtcpclient:
+	$(COMPILER) build -o ./bin/tcp/client c2c/cmd/tcp/client
 
-bc:
-	$(COMPILER) build -o ./bin/client c2c/cmd/client
+buildcontrol:
+	$(COMPILER) build -o ./bin/control c2c/cmd/control
 
 
-rs:bs
-	./bin/server
+runtcpagent:buildtcpagent
+	./bin/agent $(args)
 
-rc:bc
-	./bin/client
+runtcpclient:buildtcpclient
+	./bin/client $(args)
 
-ra:bs bc
-	./bin/server > server.log &>/dev/null
-	./bin/client
+runcontrol:buildtcpclient buildagent buildagentclient
+	./bin/control $(args)
+
+# ra:buildagent buildclient
+# 	./bin/agent
+# 	./bin/client
 
 
 
 .PHONY:clean
 clean:
 
-	-rm ./bin/server
-	-rm ./bin/client
+	-rm ./bin/*

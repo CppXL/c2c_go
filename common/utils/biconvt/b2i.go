@@ -3,7 +3,6 @@ package biconv
 // by https://gist.github.com/chiro-hiro/2674626cebbcb5a676355b7aaac4972d
 
 func Btoi64(val []byte) uint64 {
-
 	return btoi64(val)
 }
 
